@@ -1,0 +1,13 @@
+{
+  "ztp": {
+    "01-connectivity-check": {
+      "ping-hosts": ["8.8.4.4", "yahoo.com"]
+    },
+    "02-provisioning-script": {
+        "plugin": {
+          "url":"http://192.168.1.111:8000/post_install.sh"
+        },
+        "reboot-on-success": true
+    }
+  }
+}

@@ -1,0 +1,36 @@
+version: '2.3'
+services:
+  dhcp_server:
+    build:
+      context: ./DHCP_Server
+      dockerfile: Dockerfile
+    image: bgoldstone/dhcp_server
+    container_name: ztp_dhcp_server
+    # This container is only really useful in host networking mode
+    network_mode: "host"
+    # TODO: Find minimum privileges
+    privileged: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    command: ["",""]
+
+
+  http_server:
+    build:
+      context: ./HTTP_Server
+      dockerfile: Dockerfile
+    image: bgoldstone/http_server
+    container_name: ztp_http_server
+    # This container is only really useful in host networking mode
+    network_mode: "host"
+    # TODO: Find minimum privileges
+    privileged: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - dhcp_server
+    volumes:
+      - ./served_assets:/usr/local/run
+    command: ["bash", "/usr/local/run/run_http_server.sh"]
